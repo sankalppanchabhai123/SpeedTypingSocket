@@ -1,0 +1,16 @@
+// netlify/functions/websocket.js
+exports.handler = async (event, context) => {
+  const { connectionId } = JSON.parse(event.body);
+
+  if (event.requestContext.eventType === "CONNECT") {
+    console.log(`Connection established: ${connectionId}`);
+    return { statusCode: 200, body: "Connected" };
+  }
+
+  if (event.requestContext.eventType === "DISCONNECT") {
+    console.log(`Connection disconnected: ${connectionId}`);
+    return { statusCode: 200, body: "Disconnected" };
+  }
+
+  return { statusCode: 400, body: "Unsupported request" };
+};
